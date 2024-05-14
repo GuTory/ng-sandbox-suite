@@ -1,4 +1,3 @@
-<h1 class="text-3xl font-bold underline">
-  Let the fun begin ;)
-</h1>
-<router-outlet></router-outlet>
+<body [ngClass]="{ dark: isDarkEnabled }" class="mat-typography" (click)="toggleDarkmode()">
+  <router-outlet></router-outlet>
+</body>
