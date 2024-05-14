@@ -76,10 +76,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "ng-sandbox-suite:build:production"
+              "buildTarget": "ng-sandbox-suite:build:production"
             },
             "development": {
-              "browserTarget": "ng-sandbox-suite:build:development"
+              "buildTarget": "ng-sandbox-suite:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -87,7 +87,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ng-sandbox-suite:build"
+            "buildTarget": "ng-sandbox-suite:build"
           }
         },
         "test": {
