@@ -1,5 +1,5 @@
-<div class="calendar-container">
-  <div class="calendar">
+<div class="calendar-container flex-wrap gap-4">
+  <div class="calendar px-4">
     <div class="calendar-headline">
       <div class="calendar-headline-month">
         {{ firstDayOfActiveMonth().monthShort }},
@@ -15,9 +15,7 @@
         >
           Today
         </div>
-        <div class="calendar-headline-control" (click)="goToNextMonth()">
-          >
-        </div>
+        <div class="calendar-headline-control" (click)="goToNextMonth()">></div>
       </div>
     </div>
     <div class="calendar-weeks-grid">
@@ -30,20 +28,14 @@
     <div class="calendar-grid grid grid-cols-7">
       @for (dayOfMonth of daysOfMonth(); track $index) {
       <div
-        matBadge="{{dayOfWeekHabitCount(dayOfMonth)}}"
-        matBadgePosition="below"
-        matBadgeSize="small"
-        matBadgeHidden="{{dayOfWeekHabitCount(dayOfMonth) === 0}}"
-        [ngClass]="{
-          'calendar-grid-cell': true,
-          'hover:bg-gray-400': true,
-          'calendar-grid-cell-active':
+        [ngClass]="{  
+          'bg-blue-500':
             activeDay()?.toISODate() === dayOfMonth.toISODate(),
           'calendar-grid-cell-inactive':
             firstDayOfActiveMonth().month !== dayOfMonth.month,
             'calendar-grid-cell-today': dayOfMonth.toISODate() === today().toISODate(),
         }"
-        class="p-2 flex items-center justify-center cursor-pointer"
+        class="calendar-grid-cell p-2 flex items-center justify-center cursor-pointer rounded-lg hover:bg-blue-500"
         (click)="activeDay.set(dayOfMonth)"
       >
         {{ dayOfMonth.day }}
@@ -51,8 +43,8 @@
       }
     </div>
   </div>
-  <div class="schedule">
-    <div class="schedule-headline">
+  <div class="mx-2">
+    <div class="mb-8 font-semibold">
       @if (activeDay(); as activeDay) {
       <div>{{ activeDay.toLocaleString(DATE_MED) }}</div>
       } @else {
