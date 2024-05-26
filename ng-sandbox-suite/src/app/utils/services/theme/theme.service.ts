@@ -1,30 +1,22 @@
-import { Injectable, OnDestroy } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Injectable, OnDestroy, WritableSignal, signal } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ThemeService implements OnDestroy {
-  private isDark: boolean;
-  private isDarkEnabled: BehaviorSubject<boolean>;
-
-  constructor() {
-    this.isDark = localStorage.getItem('IsDarkEnabled') === 'true';
-    this.isDarkEnabled = new BehaviorSubject<boolean>(this.isDark);
-  }
+  public isDarkEnabled: WritableSignal<boolean> = signal(
+    localStorage.getItem('IsDarkEnabled') === 'true'
+  );
 
   toggleDarkmode() {
-    this.isDark = !this.isDark;
-    this.isDarkEnabled.next(this.isDark);
-    localStorage.setItem('IsDarkEnabled', this.isDark.toString());
-  }
-
-  IsDarkEnabled() : Observable<boolean> {
-    return this.isDarkEnabled;
+    this.isDarkEnabled.update((isDark: boolean) => {
+      localStorage.setItem('IsDarkEnabled', (!isDark).toString());
+      console.log('Dark mode enabled:', !isDark);
+      return !isDark;
+    });
   }
 
   ngOnDestroy(): void {
-    this.isDarkEnabled.complete();
     localStorage.removeItem('IsDarkEnabled');
   }
 }

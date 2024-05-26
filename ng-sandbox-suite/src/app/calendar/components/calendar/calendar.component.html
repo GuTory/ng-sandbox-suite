@@ -1,0 +1,71 @@
+<div class="calendar-container">
+  <div class="calendar">
+    <div class="calendar-headline">
+      <div class="calendar-headline-month">
+        {{ firstDayOfActiveMonth().monthShort }},
+        {{ firstDayOfActiveMonth().year }}
+      </div>
+      <div class="calendar-headline-controls">
+        <div class="calendar-headline-control" (click)="goToPreviousMonth()">
+          <
+        </div>
+        <div
+          class="calendar-headline-control calendar-headline-control-today"
+          (click)="goToToday()"
+        >
+          Today
+        </div>
+        <div class="calendar-headline-control" (click)="goToNextMonth()">
+          >
+        </div>
+      </div>
+    </div>
+    <div class="calendar-weeks-grid">
+      @for (weekday of weekDays(); track $index) {
+      <div class="calendar-weeks-grid-cell">
+        {{ weekday }}
+      </div>
+      }
+    </div>
+    <div class="calendar-grid grid grid-cols-7">
+      @for (dayOfMonth of daysOfMonth(); track $index) {
+      <div
+        matBadge="{{dayOfWeekHabitCount(dayOfMonth)}}"
+        matBadgePosition="below"
+        matBadgeSize="small"
+        matBadgeHidden="{{dayOfWeekHabitCount(dayOfMonth) === 0}}"
+        [ngClass]="{
+          'calendar-grid-cell': true,
+          'hover:bg-gray-400': true,
+          'calendar-grid-cell-active':
+            activeDay()?.toISODate() === dayOfMonth.toISODate(),
+          'calendar-grid-cell-inactive':
+            firstDayOfActiveMonth().month !== dayOfMonth.month,
+            'calendar-grid-cell-today': dayOfMonth.toISODate() === today().toISODate(),
+        }"
+        class="p-2 flex items-center justify-center cursor-pointer"
+        (click)="activeDay.set(dayOfMonth)"
+      >
+        {{ dayOfMonth.day }}
+      </div>
+      }
+    </div>
+  </div>
+  <div class="schedule">
+    <div class="schedule-headline">
+      @if (activeDay(); as activeDay) {
+      <div>{{ activeDay.toLocaleString(DATE_MED) }}</div>
+      } @else {
+      <div>No day selected</div>
+      }
+    </div>
+    <div>
+      @if (activeDay() && activeDayHabits().length === 0) {
+      <div>No habits for this day</div>
+      } @else if (activeDay()) { @for (habit of activeDayHabits(); track $index)
+      {
+      <div>{{ habit }}</div>
+      } }
+    </div>
+  </div>
+</div>
