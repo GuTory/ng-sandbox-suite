@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, Signal, computed, inject, signal} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
 import {CommonModule, NgSwitch, NgSwitchCase, NgSwitchDefault} from '@angular/common';
 import {ThemeService} from './utils/services/theme/theme.service';
@@ -14,18 +14,7 @@ export class AppComponent {
   title = 'ng-sandbox-suite';
   private themeService = inject(ThemeService);
 
-  public isDarkEnabled: boolean = false;
-
-  constructor() {
-    this.themeService.IsDarkEnabled().subscribe({
-      next: (isDarkEnabled) => {
-        this.isDarkEnabled = isDarkEnabled;
-      },
-      error: (error) => {
-        console.log(error);
-      }
-    });
-  }
+  public isDarkEnabled: Signal<boolean> = computed(() => this.themeService.isDarkEnabled()) ;
 
   public toggleDarkmode() {
     this.themeService.toggleDarkmode();
