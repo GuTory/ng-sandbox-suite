@@ -17,7 +17,7 @@ import {MatBadgeModule} from '@angular/material/badge';
 @Component({
   selector: 'calendar',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MatBadgeModule],
   templateUrl: './calendar.component.html',
   styleUrl: './calendar.component.scss',
 })
@@ -49,6 +49,12 @@ export class CalendarComponent {
     if (activeDayISO === null) return [];
     return this.habits().get(activeDayISO) ?? [];
   });
+
+  dayOfWeekHabitCount(dayOfWeek: DateTime): number {
+    return this.habits()
+      .get(dayOfWeek.toISODate() ?? '')
+      ?.length ?? 0;
+  }
 
   public HabitService: HabitService = inject(HabitService);
 
