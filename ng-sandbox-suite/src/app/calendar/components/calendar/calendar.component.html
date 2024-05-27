@@ -1,41 +1,41 @@
-<div class="calendar-container flex-wrap gap-4">
-  <div class="calendar px-4">
-    <div class="calendar-headline">
-      <div class="calendar-headline-month">
+<div class="flex flex-wrap gap-4">
+  <div class="[&>*]:flex [&>*]:min-w-fit px-4">
+    <div class="flex mb-2 justify-between px-4">
+      <div class="font-semibold">
         {{ firstDayOfActiveMonth().monthShort }},
         {{ firstDayOfActiveMonth().year }}
       </div>
-      <div class="calendar-headline-controls">
-        <div class="calendar-headline-control" (click)="goToPreviousMonth()">
+      <div class="flex [&>*]:cursor-pointer">
+        <div class="hover:underline" (click)="goToPreviousMonth()">
           <
         </div>
         <div
-          class="calendar-headline-control calendar-headline-control-today"
+          class="px-4 hover:underline"
           (click)="goToToday()"
         >
           Today
         </div>
-        <div class="calendar-headline-control" (click)="goToNextMonth()">></div>
+        <div class="hover:underline" (click)="goToNextMonth()">></div>
       </div>
     </div>
-    <div class="calendar-weeks-grid">
+    <div class="calendar-grid font-normal mb-2">
       @for (weekday of weekDays(); track $index) {
-      <div class="calendar-weeks-grid-cell">
+      <div class="text-center">
         {{ weekday }}
       </div>
       }
     </div>
-    <div class="calendar-grid grid grid-cols-7">
+    <div class="calendar-grid font-normal mb-2 text-slate-700">
       @for (dayOfMonth of daysOfMonth(); track $index) {
       <div
         [ngClass]="{  
           'bg-blue-500':
             activeDay()?.toISODate() === dayOfMonth.toISODate(),
-          'calendar-grid-cell-inactive':
+          'text-gray-400':
             firstDayOfActiveMonth().month !== dayOfMonth.month,
-            'calendar-grid-cell-today': dayOfMonth.toISODate() === today().toISODate(),
+            'bg-red-400': dayOfMonth.toISODate() === today().toISODate(),
         }"
-        class="flex flex-col calendar-grid-cell px-4 py-2 items-center justify-start cursor-pointer rounded-lg hover:bg-blue-500"
+        class="flex flex-col px-4 py-2 items-center justify-start cursor-pointer rounded-lg hover:bg-blue-500"
         (click)="setActiveDay(dayOfMonth)"
       >
         <div>
