@@ -35,7 +35,7 @@ export class CalendarComponent {
       this.firstDayOfActiveMonth().endOf('month').endOf('week')
     )
       .splitBy({ day: 1 })
-      .map((day) => {
+      .map((day: Interval) => {
         if (day.start === null) throw new Error('Wrong dates');
         return day.start;
       });
@@ -68,5 +68,14 @@ export class CalendarComponent {
 
   goToToday(): void {
     this.firstDayOfActiveMonth.set(this.today().startOf('month'));
+  }
+
+  setActiveDay(day: DateTime): void {
+    this.activeDay.set(day);
+    if( this.firstDayOfActiveMonth().month > day.month ) {
+      this.goToNextMonth();
+    } else if( this.firstDayOfActiveMonth().month < day.month ) {
+      this.goToPreviousMonth();
+    }
   }
 }
