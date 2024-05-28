@@ -1,58 +1,61 @@
-<div class="calendar-container">
-  <div class="calendar">
-    <div class="calendar-headline">
-      <div class="calendar-headline-month">
+<div class="flex flex-wrap justify-center gap-6">
+  <div class="[&>*]:flex [&>*]:min-w-fit p-4 text-calendar-background-dark dark:text-calendar-background-light bg-calendar-background-light dark:bg-calendar-background-dark rounded-lg shadow-lg">
+    <div class="flex mb-2 justify-between px-4">
+      <div class="font-semibold">
         {{ firstDayOfActiveMonth().monthShort }},
         {{ firstDayOfActiveMonth().year }}
       </div>
-      <div class="calendar-headline-controls">
-        <div class="calendar-headline-control" (click)="goToPreviousMonth()">
+      <div class="flex [&>*]:cursor-pointer">
+        <div class="hover:underline" (click)="goToPreviousMonth()">
           <
         </div>
         <div
-          class="calendar-headline-control calendar-headline-control-today"
+          class="px-4 hover:underline"
           (click)="goToToday()"
         >
           Today
         </div>
-        <div class="calendar-headline-control" (click)="goToNextMonth()">
-          >
-        </div>
+        <div class="hover:underline" (click)="goToNextMonth()">></div>
       </div>
     </div>
-    <div class="calendar-weeks-grid">
+    <div class="calendar-grid font-normal mb-2">
       @for (weekday of weekDays(); track $index) {
-      <div class="calendar-weeks-grid-cell">
+      <div class="text-center">
         {{ weekday }}
       </div>
       }
     </div>
-    <div class="calendar-grid grid grid-cols-7">
+    <div class="calendar-grid font-normal mb-2 text-text-primary-light dark:text-text-primary-dark">
       @for (dayOfMonth of daysOfMonth(); track $index) {
       <div
-        matBadge="{{dayOfWeekHabitCount(dayOfMonth)}}"
-        matBadgePosition="below"
-        matBadgeSize="small"
-        matBadgeHidden="{{dayOfWeekHabitCount(dayOfMonth) === 0}}"
         [ngClass]="{
-          'calendar-grid-cell': true,
-          'hover:bg-gray-400': true,
-          'calendar-grid-cell-active':
+          'bg-calendar-background-light dark:bg-calendar-background-dark':
             activeDay()?.toISODate() === dayOfMonth.toISODate(),
-          'calendar-grid-cell-inactive':
+          'text-calendar-text-light dark:text-calendar-background-dark':
             firstDayOfActiveMonth().month !== dayOfMonth.month,
-            'calendar-grid-cell-today': dayOfMonth.toISODate() === today().toISODate(),
+            'bg-calendar-today': dayOfMonth.toISODate() === today().toISODate(),
         }"
-        class="p-2 flex items-center justify-center cursor-pointer"
-        (click)="activeDay.set(dayOfMonth)"
+        class="flex flex-col px-4 py-2 min-h-16
+        items-center justify-start
+        cursor-pointer rounded-lg
+        hover:bg-calendar-background-dark dark:hover:bg-calendar-background-light
+        hover:text-calendar-text-light dark:hover:text-calendar-background-dark"
+        (click)="setActiveDay(dayOfMonth)"
       >
-        {{ dayOfMonth.day }}
+        <div>
+          {{ dayOfMonth.day }}
+        </div>
+        @if (dayOfWeekHabitCount(dayOfMonth) > 0) {
+        <div class="h-fit w-fit table-cell text-center text-xs rounded-full bg-calendar-background-dark dark:bg-calendar-background-light text-calendar-background-light dark:text-calendar-background-dark">
+          {{ dayOfWeekHabitCount(dayOfMonth) }}
+        </div>
+        }
       </div>
       }
     </div>
   </div>
-  <div class="schedule">
-    <div class="schedule-headline">
+  <div class="p-4">
+    <div class="mb-8 font-semibold">
       @if (activeDay(); as activeDay) {
       <div>{{ activeDay.toLocaleString(DATE_MED) }}</div>
       } @else {

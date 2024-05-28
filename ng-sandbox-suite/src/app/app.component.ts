@@ -11,12 +11,7 @@ import {ThemeService} from './utils/services/theme/theme.service';
   imports: [NgSwitch, NgSwitchDefault, NgSwitchCase, RouterOutlet, CommonModule]
 })
 export class AppComponent {
-  title = 'ng-sandbox-suite';
   private themeService = inject(ThemeService);
 
   public isDarkEnabled: Signal<boolean> = computed(() => this.themeService.isDarkEnabled()) ;
-
-  public toggleDarkmode() {
-    this.themeService.toggleDarkmode();
-  }
 }

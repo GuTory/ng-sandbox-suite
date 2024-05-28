@@ -1,3 +1,6 @@
-<section>
+<section class="flex flex-col [&>*]:m-6 items-center">
   <calendar [habits]="HabitService.getHabits()"></calendar>
+  <div (click)="toggleDarkmode()" class="w-fit px-4 py-2 rounded-lg shadow-lg bg-button-background-primary-light dark:bg-button-background-primary-dark text-stone-400 min-w-fit">
+    toggle dark mode here!
+  </div>
 </section>

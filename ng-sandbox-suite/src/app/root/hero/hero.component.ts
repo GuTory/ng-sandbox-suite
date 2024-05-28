@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CalendarComponent } from 'src/app/calendar/components/calendar/calendar.component';
 import { HabitService } from '../../utils/services/habit/habit.service';
+import { ThemeService } from 'src/app/utils/services/theme/theme.service';
 
 @Component({
   selector: 'hero',
@@ -11,7 +12,12 @@ import { HabitService } from '../../utils/services/habit/habit.service';
   styleUrls: ['./hero.component.scss']
 })
 export class HeroComponent {
+  private themeService = inject(ThemeService);
+
+
   HabitService: HabitService = inject(HabitService);
 
-  public soci = "assets/pictures/soci.JPEG"
+  public toggleDarkmode() {
+    this.themeService.toggleDarkmode();
+  }
 }
