@@ -8,6 +8,7 @@ import {
   inject,
   WritableSignal,
   input,
+  OnInit,
 } from '@angular/core';
 import { DateTime, Info, Interval } from 'luxon';
 import { HabitService } from '../../../utils/services/habit/habit.service';
@@ -21,11 +22,21 @@ import { MatBadgeModule } from '@angular/material/badge';
   templateUrl: './calendar.component.html',
   styleUrl: './calendar.component.scss',
 })
-export class CalendarComponent {
+export class CalendarComponent implements OnInit {
   /**
    * The habits to display in the calendar received as input.
    */
   habits: InputSignal<Habit> = input.required();
+
+  /**
+   * The current date context.
+   */
+  todayContext = input.required();
+
+  ngOnInit(): void {
+    console.log("Habits");
+    console.log(this.todayContext());
+  }
   
   /**
    * The habit service.

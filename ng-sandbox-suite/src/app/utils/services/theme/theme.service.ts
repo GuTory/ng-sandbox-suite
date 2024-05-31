@@ -1,4 +1,5 @@
 import { Injectable, OnDestroy, WritableSignal, signal } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,7 @@ export class ThemeService implements OnDestroy {
   toggleDarkmode() {
     this.isDarkEnabled.update((isDark: boolean) => {
       localStorage.setItem('IsDarkEnabled', (!isDark).toString());
-      console.log('Dark mode enabled:', !isDark);
+      if (!environment.production) console.log('Dark mode enabled:', !isDark);
       return !isDark;
     });
   }
