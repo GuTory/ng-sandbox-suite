@@ -1,74 +1,66 @@
-<div class="flex flex-wrap justify-center gap-6">
-  <div class="[&>*]:flex p-4 text-calendar-background-dark dark:text-calendar-background-light bg-calendar-background-light dark:bg-calendar-background-dark rounded-lg shadow-lg">
-    <div class="flex mb-2 justify-between px-4 min-w-fit">
-      <div class="font-semibold">
-        {{ firstDayOfActiveMonth().monthShort }},
-        {{ firstDayOfActiveMonth().year }}
-      </div>
-      <div class="flex [&>*]:cursor-pointer">
-        <div class="hover:underline" (click)="goToPreviousMonth()">
-          <
-        </div>
-        <div
-          class="px-4 hover:underline"
-          (click)="goToToday()"
-        >
-          Today
-        </div>
-        <div class="hover:underline" (click)="goToNextMonth()">></div>
-      </div>
+<div
+  class="[&>*]:flex p-4 text-calendar-background-dark dark:text-calendar-background-light bg-calendar-background-light dark:bg-calendar-background-dark rounded-lg shadow-lg"
+>
+  <div class="flex mb-2 justify-between px-4 min-w-fit">
+    <div class="font-semibold">
+      {{ firstDayOfActiveMonth().monthShort }},
+      {{ firstDayOfActiveMonth().year }}
     </div>
-    <div class="calendar-grid font-normal mb-2">
-      @for (weekday of weekDays(); track $index) {
-      <div class="text-center">
-        {{ weekday }}
-      </div>
-      }
+    <div class="flex [&>*]:cursor-pointer">
+      <div class="hover:underline" (click)="goToPreviousMonth()"><</div>
+      <div class="px-4 hover:underline" (click)="goToToday()">Today</div>
+      <div class="hover:underline" (click)="goToNextMonth()">></div>
     </div>
-    <div class="calendar-grid font-normal mb-2 text-text-primary-light dark:text-text-primary-dark">
-      @for (dayOfMonth of daysOfMonth(); track $index) {
-      <div
-        [ngClass]="{
+  </div>
+  <div class="calendar-grid font-normal mb-2">
+    @for (weekday of weekDays(); track $index) {
+    <div class="text-center">
+      {{ weekday }}
+    </div>
+    }
+  </div>
+  <div
+    class="calendar-grid font-normal mb-2 text-text-primary-light dark:text-text-primary-dark"
+  >
+    @for (dayOfMonth of daysOfMonth(); track $index) {
+    <div
+      [ngClass]="{
           'bg-calendar-background-light dark:bg-calendar-background-dark':
             activeDay()?.toISODate() === dayOfMonth.toISODate(),
           'text-calendar-text-light dark:text-calendar-background-dark':
             firstDayOfActiveMonth().month !== dayOfMonth.month,
             'border-calendar-today border-2': dayOfMonth.toISODate() === today().toISODate(),
         }"
-        class="flex flex-col px-4 py-2 min-h-16
-        items-center justify-start
-        cursor-pointer rounded-lg
-        hover:bg-calendar-background-dark dark:hover:bg-calendar-background-light
-        hover:text-calendar-text-dark dark:hover:text-calendar-background-dark"
-        (click)="setActiveDay(dayOfMonth); openBottomSheet()"
+      class="flex flex-col px-4 py-2 min-h-16 items-center justify-start cursor-pointer rounded-lg hover:bg-calendar-background-dark dark:hover:bg-calendar-background-light hover:text-calendar-text-dark dark:hover:text-calendar-background-dark"
+      (click)="setActiveDay(dayOfMonth); openBottomSheet()"
+    >
+      <div>
+        {{ dayOfMonth.day }}
+      </div>
+      @if (dayOfWeekHabitCount(dayOfMonth) > 0) {
+      <div
+        class="min-w-4 table-cell text-center text-xs rounded-full bg-calendar-background-dark dark:bg-calendar-background-light text-calendar-background-light dark:text-calendar-background-dark"
       >
-        <div>
-          {{ dayOfMonth.day }}
-        </div>
-        @if (dayOfWeekHabitCount(dayOfMonth) > 0) {
-        <div class="min-w-4 table-cell text-center text-xs rounded-full bg-calendar-background-dark dark:bg-calendar-background-light text-calendar-background-light dark:text-calendar-background-dark">
-          {{ dayOfWeekHabitCount(dayOfMonth) }}
-        </div>
-        }
+        {{ dayOfWeekHabitCount(dayOfMonth) }}
       </div>
       }
     </div>
+    }
   </div>
-  <div class="p-4 min-w-60">
-    <div class="mb-8 font-semibold">
-      @if (activeDay(); as activeDay) {
-      <div>{{ activeDay.toLocaleString(DATE_MED) }}</div>
-      } @else {
-      <div>No day selected</div>
-      }
-    </div>
-    <div>
-      @if (activeDay() && activeDayHabits().length === 0) {
-      <div>No habits for this day</div>
-      } @else if (activeDay()) { @for (habit of activeDayHabits(); track $index)
-      {
-      <div>{{ habit }}</div>
-      } }
-    </div>
+</div>
+<div class="p-4 min-w-60">
+  <div class="mb-8 font-semibold">
+    @if (activeDay(); as activeDay) {
+    <div>{{ activeDay.toLocaleString(DATE_MED) }}</div>
+    } @else {
+    <div>No day selected</div>
+    }
+  </div>
+  <div>
+    @if (activeDay() && activeDayHabits().length === 0) {
+    <div>No habits for this day</div>
+    } @else if (activeDay()) { @for (habit of activeDayHabits(); track $index) {
+    <div>{{ habit }}</div>
+    } }
   </div>
 </div>
