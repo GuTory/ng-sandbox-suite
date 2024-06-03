@@ -59,7 +59,6 @@ export class CalendarComponent implements OnInit {
     console.log('Habits');
     console.log(this.todayContext());
   }
-
   /**
    * The habit service.
    */
