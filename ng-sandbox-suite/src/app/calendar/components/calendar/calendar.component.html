@@ -1,20 +1,15 @@
 <div class="flex flex-wrap justify-center gap-6">
-  <div class="[&>*]:flex p-4 text-calendar-background-dark dark:text-calendar-background-light bg-calendar-background-light dark:bg-calendar-background-dark rounded-lg shadow-lg">
+  <div
+    class="[&>*]:flex p-4 text-calendar-background-dark dark:text-calendar-background-light bg-calendar-background-light dark:bg-calendar-background-dark rounded-lg shadow-lg"
+  >
     <div class="flex mb-2 justify-between px-4 min-w-fit">
       <div class="font-semibold">
         {{ firstDayOfActiveMonth().monthShort }},
         {{ firstDayOfActiveMonth().year }}
       </div>
       <div class="flex [&>*]:cursor-pointer">
-        <div class="hover:underline" (click)="goToPreviousMonth()">
-          <
-        </div>
-        <div
-          class="px-4 hover:underline"
-          (click)="goToToday()"
-        >
-          Today
-        </div>
+        <div class="hover:underline" (click)="goToPreviousMonth()"><</div>
+        <div class="px-4 hover:underline" (click)="goToToday()">Today</div>
         <div class="hover:underline" (click)="goToNextMonth()">></div>
       </div>
     </div>
@@ -25,7 +20,9 @@
       </div>
       }
     </div>
-    <div class="calendar-grid font-normal mb-2 text-text-primary-light dark:text-text-primary-dark">
+    <div
+      class="calendar-grid font-normal mb-2 text-text-primary-light dark:text-text-primary-dark"
+    >
       @for (dayOfMonth of daysOfMonth(); track $index) {
       <div
         [ngClass]="{
@@ -35,18 +32,16 @@
             firstDayOfActiveMonth().month !== dayOfMonth.month,
             'border-calendar-today border-2': dayOfMonth.toISODate() === today().toISODate(),
         }"
-        class="flex flex-col px-4 py-2 min-h-16
-        items-center justify-start
-        cursor-pointer rounded-lg
-        hover:bg-calendar-background-dark dark:hover:bg-calendar-background-light
-        hover:text-calendar-text-dark dark:hover:text-calendar-background-dark"
+        class="flex flex-col px-4 py-2 min-h-16 items-center justify-start cursor-pointer rounded-lg hover:bg-calendar-background-dark dark:hover:bg-calendar-background-light hover:text-calendar-text-dark dark:hover:text-calendar-background-dark"
         (click)="setActiveDay(dayOfMonth); openBottomSheet()"
       >
         <div>
           {{ dayOfMonth.day }}
         </div>
         @if (dayOfWeekHabitCount(dayOfMonth) > 0) {
-        <div class="min-w-4 table-cell text-center text-xs rounded-full bg-calendar-background-dark dark:bg-calendar-background-light text-calendar-background-light dark:text-calendar-background-dark">
+        <div
+          class="min-w-4 table-cell text-center text-xs rounded-full bg-calendar-background-dark dark:bg-calendar-background-light text-calendar-background-light dark:text-calendar-background-dark"
+        >
           {{ dayOfWeekHabitCount(dayOfMonth) }}
         </div>
         }
