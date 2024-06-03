@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CalendarComponent } from 'src/app/calendar/components/calendar/calendar.component';
+import { DateTime } from 'luxon';
 import { HabitService } from '../../utils/services/habit/habit.service';
 import { ThemeService } from 'src/app/utils/services/theme/theme.service';
 
@@ -14,10 +15,13 @@ import { ThemeService } from 'src/app/utils/services/theme/theme.service';
 export class HeroComponent {
   private themeService = inject(ThemeService);
 
-
   HabitService: HabitService = inject(HabitService);
 
   public toggleDarkmode() {
     this.themeService.toggleDarkmode();
+  }
+
+  public getToday() {
+    return DateTime.local();
   }
 }

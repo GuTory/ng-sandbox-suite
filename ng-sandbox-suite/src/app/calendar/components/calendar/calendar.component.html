@@ -1,6 +1,6 @@
 <div class="flex flex-wrap justify-center gap-6">
-  <div class="[&>*]:flex [&>*]:min-w-fit p-4 text-calendar-background-dark dark:text-calendar-background-light bg-calendar-background-light dark:bg-calendar-background-dark rounded-lg shadow-lg">
-    <div class="flex mb-2 justify-between px-4">
+  <div class="[&>*]:flex p-4 text-calendar-background-dark dark:text-calendar-background-light bg-calendar-background-light dark:bg-calendar-background-dark rounded-lg shadow-lg">
+    <div class="flex mb-2 justify-between px-4 min-w-fit">
       <div class="font-semibold">
         {{ firstDayOfActiveMonth().monthShort }},
         {{ firstDayOfActiveMonth().year }}
@@ -33,20 +33,20 @@
             activeDay()?.toISODate() === dayOfMonth.toISODate(),
           'text-calendar-text-light dark:text-calendar-background-dark':
             firstDayOfActiveMonth().month !== dayOfMonth.month,
-            'bg-calendar-today': dayOfMonth.toISODate() === today().toISODate(),
+            'border-calendar-today border-2': dayOfMonth.toISODate() === today().toISODate(),
         }"
         class="flex flex-col px-4 py-2 min-h-16
         items-center justify-start
         cursor-pointer rounded-lg
         hover:bg-calendar-background-dark dark:hover:bg-calendar-background-light
-        hover:text-calendar-text-light dark:hover:text-calendar-background-dark"
-        (click)="setActiveDay(dayOfMonth)"
+        hover:text-calendar-text-dark dark:hover:text-calendar-background-dark"
+        (click)="setActiveDay(dayOfMonth); openBottomSheet()"
       >
         <div>
           {{ dayOfMonth.day }}
         </div>
         @if (dayOfWeekHabitCount(dayOfMonth) > 0) {
-        <div class="h-fit w-fit table-cell text-center text-xs rounded-full bg-calendar-background-dark dark:bg-calendar-background-light text-calendar-background-light dark:text-calendar-background-dark">
+        <div class="min-w-4 table-cell text-center text-xs rounded-full bg-calendar-background-dark dark:bg-calendar-background-light text-calendar-background-light dark:text-calendar-background-dark">
           {{ dayOfWeekHabitCount(dayOfMonth) }}
         </div>
         }
@@ -54,7 +54,7 @@
       }
     </div>
   </div>
-  <div class="p-4">
+  <div class="p-4 min-w-60">
     <div class="mb-8 font-semibold">
       @if (activeDay(); as activeDay) {
       <div>{{ activeDay.toLocaleString(DATE_MED) }}</div>
