@@ -40,7 +40,7 @@
         cursor-pointer rounded-lg
         hover:bg-calendar-background-dark dark:hover:bg-calendar-background-light
         hover:text-calendar-text-dark dark:hover:text-calendar-background-dark"
-        (click)="setActiveDay(dayOfMonth)"
+        (click)="setActiveDay(dayOfMonth); openBottomSheet()"
       >
         <div>
           {{ dayOfMonth.day }}

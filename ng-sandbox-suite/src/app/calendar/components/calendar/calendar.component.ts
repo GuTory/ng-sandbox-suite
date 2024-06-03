@@ -9,16 +9,23 @@ import {
   WritableSignal,
   input,
   OnInit,
+  Inject,
 } from '@angular/core';
 import { DateTime, Info, Interval } from 'luxon';
 import { HabitService } from '../../../utils/services/habit/habit.service';
 import { Habit } from 'src/app/utils/models/habit.interface';
-import { MatBadgeModule } from '@angular/material/badge';
+import { MatListModule } from '@angular/material/list';
+import {
+  MAT_BOTTOM_SHEET_DATA,
+  MatBottomSheet,
+  MatBottomSheetRef,
+} from '@angular/material/bottom-sheet';
+import { CalendarBottomSheetComponent } from 'src/app/calendar-bottom-sheet/calendar-bottom-sheet.component';
 
 @Component({
   selector: 'calendar',
   standalone: true,
-  imports: [CommonModule, MatBadgeModule],
+  imports: [CommonModule, MatListModule],
   templateUrl: './calendar.component.html',
   styleUrl: './calendar.component.scss',
 })
@@ -28,16 +35,31 @@ export class CalendarComponent implements OnInit {
    */
   habits: InputSignal<Habit> = input.required();
 
+  private _bottomSheet: MatBottomSheet = inject(MatBottomSheet);
+
+  openBottomSheet(): void {
+    this._bottomSheet
+      .open(CalendarBottomSheetComponent, {
+        data: this.activeDayHabits(),
+      })
+      .afterDismissed()
+      .subscribe((result: string | null) => {
+        if (result !== undefined) {
+          console.log('Bottom sheet closed with:', result);
+        }
+      });
+  }
+
   /**
    * The current date context.
    */
   todayContext = input.required();
 
   ngOnInit(): void {
-    console.log("Habits");
+    console.log('Habits');
     console.log(this.todayContext());
   }
-  
+
   /**
    * The habit service.
    */

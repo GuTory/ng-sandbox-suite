@@ -1,0 +1,13 @@
+<mat-nav-list>
+  @for (item of data; track $index) {
+  <div mat-list-item (click)="closeBottomSheetWithParameter(item)">
+    <span matListItemTitle>{{ item }}</span>
+    <span matListItemLine>Item {{ $index + 1 }}</span>
+  </div>
+  } @empty {
+  <div mat-list-item>
+    <span matListItemTitle>No item for the day</span>
+    <span matListItemLine>Select another day</span>
+  </div>
+  }
+</mat-nav-list>
