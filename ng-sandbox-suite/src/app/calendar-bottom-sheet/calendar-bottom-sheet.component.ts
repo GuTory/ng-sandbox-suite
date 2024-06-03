@@ -1,6 +1,5 @@
 import { Component, Inject, inject } from '@angular/core';
 import { MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef } from '@angular/material/bottom-sheet';
-import { Habit } from 'src/app/utils/models/habit.interface';
 import { MatListModule } from '@angular/material/list';
 
 @Component({

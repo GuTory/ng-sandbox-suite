@@ -9,17 +9,12 @@ import {
   WritableSignal,
   input,
   OnInit,
-  Inject,
 } from '@angular/core';
 import { DateTime, Info, Interval } from 'luxon';
 import { HabitService } from '../../../utils/services/habit/habit.service';
 import { Habit } from 'src/app/utils/models/habit.interface';
 import { MatListModule } from '@angular/material/list';
-import {
-  MAT_BOTTOM_SHEET_DATA,
-  MatBottomSheet,
-  MatBottomSheetRef,
-} from '@angular/material/bottom-sheet';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { CalendarBottomSheetComponent } from 'src/app/calendar-bottom-sheet/calendar-bottom-sheet.component';
 
 @Component({
